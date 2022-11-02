@@ -6,14 +6,14 @@
 
 ### Parametre :
 
-![maquette acceuil](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Parametre.png)
+![maquette parametre](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Parametre.png)
 
 
-### Enregistrement (enregistrement):
+### Enregistrement (avant):
 
-![maquette acceuil](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Enregistrement.png)
+![maquette enregistrement avant](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Enregistrement.png)
 
 
-### Enregistrement (enregistrement):
+### Enregistrement (pendant):
 
-![maquette acceuil](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Enregistrement_en_cours.png)
+![maquette enregistrement pendant](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Enregistrement_en_cours.png)
