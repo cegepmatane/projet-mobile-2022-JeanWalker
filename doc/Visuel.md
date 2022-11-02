@@ -9,6 +9,11 @@
 ![maquette acceuil](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Parametre.png)
 
 
-### Enregistrement :
+### Enregistrement (avant enregistrement):
+
+![maquette acceuil](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Enregistrement.png)
+
+
+### Enregistrement (pendant enregistrement):
 
 ![maquette acceuil](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Enregistrement.png)
