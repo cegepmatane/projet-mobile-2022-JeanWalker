@@ -17,3 +17,7 @@
 ### Enregistrement (pendant):
 
 ![maquette enregistrement pendant](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Enregistrement_en_cours.png)
+
+### Detail:
+
+![maquette enregistrement pendant](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Detail.png)
