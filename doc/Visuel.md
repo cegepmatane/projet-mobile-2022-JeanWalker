@@ -1,5 +1,5 @@
-### Capture des maquettes
+## Capture des maquettes
 
-## Acceuil :
+### Acceuil :
 
 ![maquette acceuil](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Accueil.png)
