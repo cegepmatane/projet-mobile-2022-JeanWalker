@@ -27,9 +27,40 @@ docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
 # API
 
-|        Fonction         |   Paramètre   | Type de données récupérées |                             Description                              |
-|:------------------------|:--------------|:---------------------------|:---------------------------------------------------------------------|
-| GetAllEnregistrements() |               |    `Collectionreference`   | Récupère tous les enregistrements de la collection 'enregistrements' |
+|        Fonction         |   Paramètre   | Type de données récupérées |                             Description                              | Exemple |
+|:------------------------|:--------------|:---------------------------|:---------------------------------------------------------------------|:--------|
+| Lister tous les trajets |               |    Liste de trajets | Récupère tous les trajets pour tous les utilisateurs | ```json
+    {
+        "user_1" =>{
+            "trajet_1" =>{
+                "route" =>{
+                    [0°N, 0°E],
+                    [0°N, 0°E],
+                    ...
+                },
+                viteses =>{
+                    0,
+                    0,
+                    ...
+                }
+                temps => "0000s"
+            },
+            "trajet_2" =>{
+                "route" =>{
+                    [0°N, 0°E],
+                    [0°N, 0°E],
+                    ...
+                },
+                viteses =>{
+                    0,
+                    0,
+                    ...
+                }
+                temps => "0000s"
+            },
+        },
+    }
+    ``` |
 | GetEnregistrementsForUser() | `String user` | `List<DocumentReference>`| Récupère tous les enregistrements pour un user donné               |
 | GetEnregistrementInfo() | `String id`   | `DocumentReference`        | Récupère les informations d'un document précis                       |
 | AddEnregistrement()     | `Enregistrement e`|                        | Ajoute un enregistrement dans la collection des enregistrements      |
