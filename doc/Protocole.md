@@ -27,9 +27,21 @@ docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
 # API
 
-|        Fonction         |   Paramètre   | Type de données récupérées |                             Description                              | Exemple |
-|:------------------------|:--------------|:---------------------------|:---------------------------------------------------------------------|:--------|
-| Lister tous les trajets |               |    Liste de trajets | Récupère tous les trajets pour tous les utilisateurs | ```json
+
+
+|        Fonction         |   Paramètres   | Type de données récupérées |                             Description                              | Exemple |
+|:------------------------|:---------------|:---------------------------|:---------------------------------------------------------------------|:--------|
+| Lister tous les trajets |                |    Liste d'utilisateurs et de trajets | Récupère tous les trajets pour tous les utilisateurs      | [Exemple de données](#exemple-1) |
+| Lister tous les trajets d'un utilisateur | utilisateur | Liste de trajets| Récupère tous les enregistrements pour un user donné              | [Exemple de données](#exemple-2) |
+| Donner les informations pour un trajet   | trajet | Informations du trajet        | Récupère les informations d'un trajet donnée             | [Exemple de données](#exemple-3) |
+| Ajouter un trajet pour un utilisateur    | utilisateur, trajet |                        | Ajoute un trajet pour un utilisateur               |
+| Supprimer un trajet pour utilisateur     | utilisateur, trajet   |                            | Supprime un enregistrement donné pour un utilisateur donnée | |
+| Modifier un trajet pour un utilisateur | champ à modifier, la nouvelle valeur | | Modifie un trajet selon les paramètres donnés              | |
+
+# Exemples
+## Exemple 1
+```json
+    json
     {
         "user_1" =>{
             "trajet_1" =>{
@@ -59,9 +71,60 @@ docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 temps => "0000s"
             },
         },
+        ...
     }
-    ``` |
-| GetEnregistrementsForUser() | `String user` | `List<DocumentReference>`| Récupère tous les enregistrements pour un user donné               |
-| GetEnregistrementInfo() | `String id`   | `DocumentReference`        | Récupère les informations d'un document précis                       |
-| AddEnregistrement()     | `Enregistrement e`|                        | Ajoute un enregistrement dans la collection des enregistrements      |
-| DeleteEnregistrement()  | `String id`   |                            | Supprime un enregistrement donné                                     |
+```
+
+## Exemple 2
+```json
+    json
+    {
+        "user_1" =>{
+            "trajet_1" =>{
+                "route" =>{
+                    [0°N, 0°E],
+                    [0°N, 0°E],
+                    ...
+                },
+                viteses =>{
+                    0,
+                    0,
+                    ...
+                }
+                temps => "0000s"
+            },
+            "trajet_2" =>{
+                "route" =>{
+                    [0°N, 0°E],
+                    [0°N, 0°E],
+                    ...
+                },
+                viteses =>{
+                    0,
+                    0,
+                    ...
+                }
+                temps => "0000s"
+            },
+        }
+    }
+```
+
+## Exemple 3
+```json
+    json
+    {
+        "trajet_1"=>{
+            "route" =>{
+                    [0°N, 0°E],
+                    [0°N, 0°E],
+                    ...
+            },
+            "viteses" =>{
+                0,
+                0,
+                ...
+            },
+            "temps" => "0000s"
+        }
+    }
