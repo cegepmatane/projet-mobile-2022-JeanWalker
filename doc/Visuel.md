@@ -21,3 +21,14 @@
 ### Detail:
 
 ![maquette enregistrement pendant](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/maquette/maquette_JeanWalker_Detail.png)
+
+## Capture des storyboards
+
+### Detail:
+![storyboard detail](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/storyboard/Storyboard_Detail.png)
+
+### Enregistrement:
+![storyboard enregistrement](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/storyboard/Storyboard_Enregistrement.png)
+
+### Parametre:
+![storyboard parametre](https://github.com/cegepmatane/projet-mobile-2022-JeanWalker/blob/master/doc/storyboard/Storyboard_Parametre.png)
