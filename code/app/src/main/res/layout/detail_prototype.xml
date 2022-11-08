@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/accueil_button"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        android:text="Accueil"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/enregistrement_button"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="Enregistrer"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/parametre_button"
+        app:layout_constraintStart_toEndOf="@+id/accueil_button" />
+
+    <Button
+        android:id="@+id/parametre_button"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="30dp"
+        android:text="Parametre"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/titreActivite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Titre enregistre"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dateEntete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text="Date :"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/titreActivite"
+        app:layout_constraintTop_toBottomOf="@+id/titreActivite" />
+
+    <TextView
+        android:id="@+id/distanceEntete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Distance :"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/titreActivite"
+        app:layout_constraintTop_toBottomOf="@+id/dateEntete" />
+
+    <TextView
+        android:id="@+id/tempsEntete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Temps :"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/titreActivite"
+        app:layout_constraintTop_toBottomOf="@+id/distanceEntete" />
+
+    <TextView
+        android:id="@+id/dateDonnee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-175dp"
+        android:text="jj/mm/aaaa"
+        app:layout_constraintBottom_toBottomOf="@+id/dateEntete"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dateEntete" />
+
+    <TextView
+        android:id="@+id/distanceDonnee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-175dp"
+        android:text="xx km"
+        app:layout_constraintBottom_toBottomOf="@+id/distanceEntete"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/distanceEntete" />
+
+    <TextView
+        android:id="@+id/tempsDonnee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-175dp"
+        android:text="xx : xx"
+        app:layout_constraintBottom_toBottomOf="@+id/tempsEntete"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tempsEntete" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
