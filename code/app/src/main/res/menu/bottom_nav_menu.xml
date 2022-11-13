@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_accueil"
+        android:id="@+id/AccueilFragment"
         android:enabled="true"
+        android:icon="@drawable/ic_accueil"
         android:title="Accueil"
         />
 
     <item
-        android:id="@+id/action_enregistrement"
+        android:id="@+id/mapsFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_action_enregistrer"
-        android:title="Enregistrer"
-        />
+        android:icon="@drawable/ic_enregistrer"
+        android:iconTint="@color/red_record"
+        android:title="Enregistrer" />
 
     <item
-        android:id="@+id/action_parametres"
+        android:id="@+id/parametresFragment"
         android:enabled="true"
+        android:icon="@drawable/ic_settings"
         android:title="Parametres"
         />
 </menu>

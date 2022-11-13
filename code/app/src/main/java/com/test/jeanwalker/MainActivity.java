@@ -1,50 +1,40 @@
 package com.test.jeanwalker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
+import static android.content.ContentValues.TAG;
 
-import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
+
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_accueil:
-                        Toast.makeText(MainActivity.this, "Recents", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_enregistrement:
-                        Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_parametres:
-                        Toast.makeText(MainActivity.this, "Nearby", Toast.LENGTH_SHORT).show();
-                        break;                }
-                return true;
-            }
-        });
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+        NavController navController = navHostFragment.getNavController();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        NavigationUI.setupWithNavController(bottomNav, navController);
 
-        Button btnMaps = findViewById(R.id.buttonMaps);
-        btnMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), MapEnregistrement.class);
-                startActivity(intent);
-            }
-        });
+    }
+
+    private void openFragment(Fragment fragment) {
+        Log.d(TAG, "openFragment: ");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //this is a helper class that replaces the container with the fragment. You can replace or add fragments.
+        transaction.replace(R.id.mainRelativeLayout, fragment);
+        transaction.addToBackStack(null); //if you add fragments it will be added to the backStack. If you replace the fragment it will add only the last fragment
+        transaction.commit(); // commit() performs the action
     }
 }
