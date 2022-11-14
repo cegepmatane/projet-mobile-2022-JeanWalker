@@ -1,15 +1,10 @@
 package com.test.jeanwalker.dao;
 
-import static android.content.ContentValues.TAG;
 
-import android.content.Context;
+import static android.service.controls.ControlsProviderService.TAG;
+
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,22 +23,28 @@ public class TrajetDAO {
         this.trajet = null;
     }
 
-    public List<Trajet> loadData(String user){
+    public List<Trajet> listerTrajetsPourUser(String user, FirestoreCallbacks callback){
+        Log.d(TAG, "inside listerTrajets");
         List<Trajet> listeTrajets = new ArrayList<>();
         DocumentReference documentRef = firestore.collection("trajets").document("init");
-        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                DocumentSnapshot doc = task.getResult();
-                if(task.isSuccessful()) {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    String titre = documentSnapshot.getId();
-                    List<GeoPoint> route = (List<GeoPoint>) documentSnapshot.get("route");
-                    int duree = Math.toIntExact(Math.round(documentSnapshot.getDouble("duree")));
-                    listeTrajets.add(new Trajet(titre));
-                }
+        documentRef.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                DocumentSnapshot documentSnapshot = task.getResult();
+                String titre = documentSnapshot.getId();
+                List<GeoPoint> route = (List<GeoPoint>) documentSnapshot.get("route");
+                int duree = Math.toIntExact(Math.round(documentSnapshot.getDouble("duree")));
+                listeTrajets.add(new Trajet(titre));
+
+                callback.onCallback(listeTrajets);
+                Log.d(TAG, "Inside onComplete");
+                Log.d(TAG, listeTrajets.toString());
+            }else{
+                Log.d(TAG, "Error getting document", task.getException());
             }
         });
+
+        Log.d(TAG, "outside completeListener");
+        Log.d(TAG, listeTrajets.toString());
 
         return listeTrajets;
     }
