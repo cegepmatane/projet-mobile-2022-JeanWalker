@@ -1,12 +1,32 @@
 package com.test.jeanwalker;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.test.jeanwalker.dao.TrajetDAO;
+import com.test.jeanwalker.modeles.Trajet;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +43,8 @@ public class AccueilFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ListView listeTrajets;
 
     public AccueilFragment() {
         // Required empty public constructor
@@ -60,5 +82,29 @@ public class AccueilFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_accueil, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TextView tv = (TextView) view.findViewById(R.id.textView);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentRef = db.collection("trajets").document("init");
+        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot doc = task.getResult();
+                if(task.isSuccessful()){
+                    Log.d(TAG, "DocumentSnapshot data : " + doc.getData());
+                    tv.setText(doc.getId());
+                }
+            }
+        });
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        TrajetDAO dao = new TrajetDAO(db);
+//        List<Trajet> listeTrajets = dao.loadData("init");
+//        Trajet trajet = listeTrajets.get(0);
+//        tv.setText(trajet.getTitre());
     }
 }

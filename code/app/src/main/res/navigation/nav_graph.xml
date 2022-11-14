@@ -9,11 +9,7 @@
         android:id="@+id/mapsFragment"
         android:name="com.test.jeanwalker.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" >
-        <action
-            android:id="@+id/action_mapsFragment_to_mainFragment"
-            app:destination="@id/AccueilFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_maps" />
     <activity
         android:id="@+id/details"
         android:name="com.test.jeanwalker.Details"
@@ -23,17 +19,7 @@
         android:id="@+id/AccueilFragment"
         android:name="com.test.jeanwalker.AccueilFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_accueil" >
-        <action
-            android:id="@+id/action_mainFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_details"
-            app:destination="@id/details" />
-        <action
-            android:id="@+id/action_AccueilFragment_to_parametresFragment"
-            app:destination="@id/parametresFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_accueil" />
     <fragment
         android:id="@+id/parametresFragment"
         android:name="com.test.jeanwalker.ParametresFragment"

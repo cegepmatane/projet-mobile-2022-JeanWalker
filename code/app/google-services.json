@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "423940378817",
+    "project_id": "jeanwalker",
+    "storage_bucket": "jeanwalker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423940378817:android:07296764ff397128b34440",
+        "android_client_info": {
+          "package_name": "com.test.jeanwalker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423940378817-n9ifhg2k48guinmrgp4hvdqmp85r01rh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC14hS2_osbUzGpgW_yJt4h2At2EkizbUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423940378817-n9ifhg2k48guinmrgp4hvdqmp85r01rh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

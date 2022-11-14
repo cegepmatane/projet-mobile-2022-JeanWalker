@@ -28,13 +28,4 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNav, navController);
 
     }
-
-    private void openFragment(Fragment fragment) {
-        Log.d(TAG, "openFragment: ");
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //this is a helper class that replaces the container with the fragment. You can replace or add fragments.
-        transaction.replace(R.id.mainRelativeLayout, fragment);
-        transaction.addToBackStack(null); //if you add fragments it will be added to the backStack. If you replace the fragment it will add only the last fragment
-        transaction.commit(); // commit() performs the action
-    }
 }
