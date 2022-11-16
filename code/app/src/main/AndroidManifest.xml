@@ -30,10 +30,6 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".MapEnregistrement"
-            android:exported="false"
-            android:label="@string/title_activity_map_enregistrement" />
-        <activity
             android:name=".Details"
             android:exported="false"
             android:label="@string/title_activity_details"
