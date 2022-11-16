@@ -10,10 +10,10 @@
 ![Details-Resume](prototype/Detail_resume.PNG)
 
 ## Détails - Maps
-![Details-Maps](prototype/Detail_Maps.PNG.PNG)
+![Details-Maps](prototype/Detail_Maps.PNG)
 
 ## Détails - Analyse
-![Details-Analyse](prototype/Detail_Analyse.PNG.PNG)
+![Details-Analyse](prototype/Detail_Analyse.PNG)
 
 ## Enregistrement
 ![Enregistrement](prototype/Enregistrement.PNG)
