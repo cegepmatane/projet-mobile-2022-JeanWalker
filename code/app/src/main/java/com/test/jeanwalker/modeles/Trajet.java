@@ -27,6 +27,11 @@ public class Trajet {
         this.titre = titre;
     }
 
+    public Trajet(String titre, int duree) {
+        this.titre = titre;
+        this.duree = duree;
+    }
+
     public Trajet(String titre, List<GeoPoint> route, int duree) {
         this.titre = titre;
         this.route = route;

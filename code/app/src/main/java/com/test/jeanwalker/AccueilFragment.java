@@ -1,24 +1,29 @@
 package com.test.jeanwalker;
 
-import android.app.ProgressDialog;
+import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.test.jeanwalker.dao.TrajetDAO;
 import com.test.jeanwalker.modeles.Trajet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -82,30 +87,48 @@ public class AccueilFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView tv = (TextView) view.findViewById(R.id.textView);
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        DocumentReference documentRef = db.collection("trajets").document("init");
-//        documentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                DocumentSnapshot doc = task.getResult();
-//                if(task.isSuccessful()){
-//                    Log.d(TAG, "DocumentSnapshot data : " + doc.getData());
-//                    tv.setText(doc.getId());
-//                }
-//            }
-//        });
+
+        TextView textAccueil = (TextView) view.findViewById(R.id.vueAccueilTextAccueil);
+
+        listeViewTrajets = (ListView) view.findViewById(R.id.listeTrajets);
+        LinearLayout greyLayout = (LinearLayout) view.findViewById(R.id.greyLayout);
+        greyLayout.setVisibility(View.VISIBLE);;
+        getActivity().getWindow().setFlags(FLAG_NOT_TOUCHABLE, FLAG_NOT_TOUCHABLE);
+
+
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         TrajetDAO dao = new TrajetDAO(db);
 
-        ProgressBar progressBar = new ProgressBar();
         listeTrajets = new ArrayList<Trajet>();
         dao.listerTrajetsPourUser("init", trajetList -> {
             listeTrajets = trajetList;
-            Trajet trajet = listeTrajets.get(0);
-            tv.setText(trajet.getTitre());
+            //Trajet trajet = listeTrajets.get(0);
+            //tv.setText(trajet.getTitre());
+
+            for (int i = 0; i<15; i++){
+                listeTrajets.add(new Trajet("trajet", 100));
+            }
+
+            List<HashMap<String, String>> listeTrajetsPourAfficher = new ArrayList<>();
+
+            for (Trajet trajet : listeTrajets){
+                listeTrajetsPourAfficher.add(trajet.obtenirTrajetPourAfficher());
+            }
+
+            SimpleAdapter adapter = new SimpleAdapter(
+                    view.getContext(),
+                    listeTrajetsPourAfficher,
+                    android.R.layout.two_line_list_item,
+                    new String[]{"titre", "duree"},
+                    new int[]{android.R.id.text1, android.R.id.text2}
+            );
+            listeViewTrajets.setAdapter(adapter);
+            textAccueil.setVisibility(View.GONE);
+
+            greyLayout.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(FLAG_NOT_TOUCHABLE);
+
         });
-//        Trajet trajet = listeTrajets.get(0);
-//        tv.setText(trajet.getTitre());
     }
 }
