@@ -65,8 +65,16 @@ public class Trajet {
     public HashMap<String, String> obtenirTrajetPourAfficher(){
         HashMap<String, String> trajetPourAfficher = new HashMap<>();
         trajetPourAfficher.put("titre", this.titre);
-        trajetPourAfficher.put("duree", Integer.toString(this.duree) );
+        trajetPourAfficher.put("duree", dureeEnString(this.duree) );
 
         return trajetPourAfficher;
+    }
+
+    private String dureeEnString(int duree){
+        int hr = duree / 3600;
+        int min = (duree % 3600) / 60;
+        int sec = (duree % 3600) % 60;
+
+        return String.format("%02d:%02d:%02d", hr, min, sec);
     }
 }

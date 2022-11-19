@@ -107,7 +107,9 @@ public class AccueilFragment extends Fragment {
             //tv.setText(trajet.getTitre());
 
             for (int i = 0; i<15; i++){
-                listeTrajets.add(new Trajet("trajet", 100));
+                listeTrajets.add(new Trajet("Course à pieds dans la forêt", 6350));
+                listeTrajets.add(new Trajet("Tour de vélo en famille", 3793));
+                listeTrajets.add(new Trajet("Rando en montagne", 10982));
             }
 
             List<HashMap<String, String>> listeTrajetsPourAfficher = new ArrayList<>();
