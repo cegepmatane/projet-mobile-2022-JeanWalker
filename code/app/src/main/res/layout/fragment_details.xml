@@ -7,8 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.PlaceholderFragment">
 
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/Details_NavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="250px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </com.google.android.material.navigation.NavigationView>
+
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/title_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -19,5 +29,15 @@
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/detail_nav_graph"
+        tools:layout_editor_absoluteX="-3dp"
+        tools:layout_editor_absoluteY="153dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

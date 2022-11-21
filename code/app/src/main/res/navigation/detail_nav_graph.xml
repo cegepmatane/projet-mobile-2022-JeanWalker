@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_nav_graph"
+    app:startDestination="@id/detailResumeFragment">
+
+    <fragment
+        android:id="@+id/detailResumeFragment"
+        android:name="com.test.jeanwalker.DetailResumeFragment"
+        android:label="fragment_detail_resume"
+        tools:layout="@layout/fragment_detail_resume" />
+    <fragment
+        android:id="@+id/detailMapFragment"
+        android:name="com.test.jeanwalker.DetailMapFragment"
+        android:label="fragment_detail_map"
+        tools:layout="@layout/fragment_detail_map" />
+    <fragment
+        android:id="@+id/detailAnalyseFragment"
+        android:name="com.test.jeanwalker.DetailAnalyseFragment"
+        android:label="fragment_detail_analyse"
+        tools:layout="@layout/fragment_detail_analyse" />
+</navigation>

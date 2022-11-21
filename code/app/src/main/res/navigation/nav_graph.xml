@@ -10,11 +10,6 @@
         android:name="com.test.jeanwalker.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
-    <activity
-        android:id="@+id/details"
-        android:name="com.test.jeanwalker.Details"
-        android:label="activity_details"
-        tools:layout="@layout/activity_details" />
     <fragment
         android:id="@+id/AccueilFragment"
         android:name="com.test.jeanwalker.AccueilFragment"
@@ -25,4 +20,9 @@
         android:name="com.test.jeanwalker.ParametresFragment"
         android:label="fragment_parametres"
         tools:layout="@layout/fragment_parametres" />
+    <fragment
+        android:id="@+id/placeholderFragment"
+        android:name="com.test.jeanwalker.ui.main.PlaceholderFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" />
 </navigation>

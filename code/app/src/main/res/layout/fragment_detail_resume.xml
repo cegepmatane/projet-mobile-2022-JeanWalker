@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailResumeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/distance_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Distance :"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/date_label"
+            app:layout_constraintTop_toBottomOf="@+id/date_label" />
+
+        <TextView
+            android:id="@+id/ditance_data"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_marginStart="20dp"
+            android:text="10km"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/distance_label"
+            app:layout_constraintStart_toEndOf="@+id/distance_label"
+            app:layout_constraintTop_toTopOf="@+id/distance_label" />
+
+        <TextView
+            android:id="@+id/temps_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Temps :"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/distance_label"
+            app:layout_constraintTop_toBottomOf="@+id/distance_label" />
+
+        <TextView
+            android:id="@+id/title_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titre provisoire"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_editor_absoluteY="100dp" />
+
+        <TextView
+            android:id="@+id/date_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="16/11/2022"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/date_label"
+            app:layout_constraintStart_toEndOf="@+id/date_label"
+            app:layout_constraintTop_toTopOf="@+id/date_label" />
+
+        <TextView
+            android:id="@+id/temps_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="2h"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/temps_label"
+            app:layout_constraintStart_toEndOf="@+id/temps_label"
+            app:layout_constraintTop_toTopOf="@+id/temps_label" />
+
+        <TextView
+            android:id="@+id/date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="80dp"
+            android:text="Date :"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_label" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
