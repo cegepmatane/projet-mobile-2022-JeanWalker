@@ -30,11 +30,6 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".Details"
-            android:exported="false"
-            android:label="@string/title_activity_details"
-            android:theme="@style/Theme.JeanWalker.NoActionBar" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
