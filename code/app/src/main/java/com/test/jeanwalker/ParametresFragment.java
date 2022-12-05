@@ -1,12 +1,18 @@
 package com.test.jeanwalker;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +59,18 @@ public class ParametresFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button signOutBtn = (Button) view.findViewById(R.id.vueParametresActionSignOut);
+
+        signOutBtn.setOnClickListener(viewLambda -> {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            auth.signOut();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+        });
     }
 
     @Override

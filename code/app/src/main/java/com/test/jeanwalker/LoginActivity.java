@@ -53,13 +53,20 @@ public class LoginActivity extends AppCompatActivity {
 
         // FirebaseAuth init
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        findViewById(R.id.googleAuthSigninButton).setOnClickListener(view -> {
-            //Début google signin
-            Log.d(TAG, "Begin google signin");
-            Intent intent = googleSignInClient.getSignInIntent();
-            startActivityForResult(intent, REQ_SIGN_IN);
-        });
+        if (user != null){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }else{
+            findViewById(R.id.googleAuthSigninButton).setOnClickListener(view -> {
+                //Début google signin
+                Log.d(TAG, "Begin google signin");
+                Intent intent = googleSignInClient.getSignInIntent();
+                startActivityForResult(intent, REQ_SIGN_IN);
+            });
+        }
+
     }
 
     @Override
