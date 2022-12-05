@@ -23,7 +23,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.test.jeanwalker.databinding.ActivityMainBinding;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient googleSignInClient;
 
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
 
     private static final String TAG = "GOOGLE_SIGN_IN_TAG";
 
@@ -53,9 +57,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // FirebaseAuth init
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
 
-        if (user != null){
+        if (currentUser != null){
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }else{
@@ -96,16 +100,17 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "onSuccess : Logged in");
 
                         //Récup le user
-                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        currentUser = firebaseAuth.getCurrentUser();
 
-                        String userId = firebaseUser.getUid();
-                        String email = firebaseUser.getEmail();
+                        String userId = currentUser.getUid();
+                        String email = currentUser.getEmail();
 
                         // check si nouveau user
                         if (authResult.getAdditionalUserInfo().isNewUser()){
                             //Nouveau -> création de compte
                             Log.d(TAG, "onSuccess: Création compte : "+email);
                             Toast.makeText(LoginActivity.this, "Compte créé pour : "+email, Toast.LENGTH_SHORT).show();
+                            firebaseAuthCreeFirestoreForCurrentUser();
                         }else {
                             //Existant -> logged in
                             Log.d(TAG, "onSuccess: User existe : "+email);
@@ -121,6 +126,35 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Log.d(TAG, "onFailure : Loggin failed"+e.getMessage());
                     }
+                });
+    }
+
+    /**
+     * Quand le user se login pour la première fois, on crée sa collection dans Firestore avec son UId
+     * comme id.
+     * On crée ensuite sa collection d'informations, avec comme document unique ses infos.
+     * Infos :
+     *      - email
+     *      - displayName
+     *
+     */
+    private void firebaseAuthCreeFirestoreForCurrentUser(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Création du Hashmap des infos du user
+        HashMap<String, Object> userInfos = new HashMap<>();
+        userInfos.put("email", currentUser.getEmail());
+        userInfos.put("displayName", currentUser.getDisplayName());
+
+
+        db.collection("users").document(currentUser.getUid())
+                .collection("userInfos").document("infos")
+                .set(userInfos)
+                .addOnSuccessListener(unused -> {
+                    Log.d(TAG, "firebaseAuthCreeFirestoreForCurrentUser: Success adding user to firestore !");
+                })
+                .addOnFailureListener(exception -> {
+                    Log.w(TAG, "firebaseAuthCreeFirestoreForCurrentUser: Faillure on adding user to firestore. Exception :", exception);
                 });
     }
 }
