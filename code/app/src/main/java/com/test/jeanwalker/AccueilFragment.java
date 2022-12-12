@@ -2,15 +2,12 @@ package com.test.jeanwalker;
 
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -18,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.test.jeanwalker.dao.TrajetDAO;
 import com.test.jeanwalker.modeles.Trajet;
@@ -44,6 +43,7 @@ public class AccueilFragment extends Fragment {
 
     private ListView listeViewTrajets;
     private List<Trajet> listeTrajets;
+    private FirebaseUser currentUser;
 
     public AccueilFragment() {
         // Required empty public constructor
@@ -70,10 +70,7 @@ public class AccueilFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
@@ -98,10 +95,10 @@ public class AccueilFragment extends Fragment {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        TrajetDAO dao = new TrajetDAO(db);
+        TrajetDAO dao = new TrajetDAO(db, currentUser);
 
         listeTrajets = new ArrayList<Trajet>();
-        dao.listerTrajetsPourUser("init", trajetList -> {
+        dao.listerTrajetsPourUser(trajetList -> {
             listeTrajets = trajetList;
             //Trajet trajet = listeTrajets.get(0);
             //tv.setText(trajet.getTitre());

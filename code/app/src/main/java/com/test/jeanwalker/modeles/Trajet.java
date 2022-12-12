@@ -1,6 +1,7 @@
 package com.test.jeanwalker.modeles;
 
 import com.google.firebase.firestore.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,8 +9,8 @@ import java.util.List;
 
 public class Trajet {
     protected String titre;
-    protected List<GeoPoint> route;
     protected int duree;
+    protected List<GeoPoint> route;
 
     public Trajet() {
     }
@@ -32,10 +33,10 @@ public class Trajet {
         this.duree = duree;
     }
 
-    public Trajet(String titre, List<GeoPoint> route, int duree) {
+    public Trajet(String titre, int duree, List<GeoPoint> route) {
         this.titre = titre;
-        this.route = route;
         this.duree = duree;
+        this.route = route;
     }
 
     public List<GeoPoint> getRoute() {
@@ -68,6 +69,18 @@ public class Trajet {
         trajetPourAfficher.put("duree", dureeEnString(this.duree) );
 
         return trajetPourAfficher;
+    }
+
+    public List<LatLng> transformeGeoPointsToLatLng(){
+        List<LatLng> latLngRoute = new ArrayList<>();
+
+        for (GeoPoint point : route){
+            double lat = point.getLatitude();
+            double lng = point.getLongitude();
+            LatLng latLngPoint = new LatLng(lat, lng);
+            latLngRoute.add(latLngPoint);
+        }
+        return latLngRoute;
     }
 
     private String dureeEnString(int duree){
