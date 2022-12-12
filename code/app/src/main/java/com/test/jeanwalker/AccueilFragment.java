@@ -2,7 +2,10 @@ package com.test.jeanwalker;
 
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
+import android.app.MediaRouteButton;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +39,7 @@ public class AccueilFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "ACCUEIL_FRAGMENT";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -44,6 +48,7 @@ public class AccueilFragment extends Fragment {
     private ListView listeViewTrajets;
     private List<Trajet> listeTrajets;
     private FirebaseUser currentUser;
+    private LinearLayout greyLayout;
 
     public AccueilFragment() {
         // Required empty public constructor
@@ -70,7 +75,6 @@ public class AccueilFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
@@ -85,10 +89,10 @@ public class AccueilFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        TextView textAccueil = (TextView) view.findViewById(R.id.vueAccueilTextAccueil);
+        //TextView textAccueil = (TextView) view.findViewById(R.id.vueAccueilTextAccueil);
 
         listeViewTrajets = (ListView) view.findViewById(R.id.listeTrajets);
-        LinearLayout greyLayout = (LinearLayout) view.findViewById(R.id.greyLayout);
+        greyLayout = (LinearLayout) view.findViewById(R.id.greyLayout);
         greyLayout.setVisibility(View.VISIBLE);;
         getActivity().getWindow().setFlags(FLAG_NOT_TOUCHABLE, FLAG_NOT_TOUCHABLE);
 
@@ -98,7 +102,10 @@ public class AccueilFragment extends Fragment {
         TrajetDAO dao = new TrajetDAO(db, currentUser);
 
         listeTrajets = new ArrayList<Trajet>();
-        dao.listerTrajetsPourUser(trajetList -> {
+
+        Log.d(TAG, "onViewCreated: called");
+        
+        /*dao.listerTrajetsPourUser(trajetList -> {
             listeTrajets = trajetList;
             //Trajet trajet = listeTrajets.get(0);
             //tv.setText(trajet.getTitre());
@@ -124,6 +131,52 @@ public class AccueilFragment extends Fragment {
             );
             listeViewTrajets.setAdapter(adapter);
             textAccueil.setVisibility(View.GONE);
+
+            greyLayout.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(FLAG_NOT_TOUCHABLE);
+
+        });*/
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        Log.d(TAG, "onStart: called");
+
+        this.currentUser = firebaseAuth.getCurrentUser();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        TrajetDAO dao = new TrajetDAO(db, currentUser);
+
+        listeTrajets = new ArrayList<Trajet>();
+
+        dao.listerTrajetsPourUser(trajetList -> {
+            listeTrajets = trajetList;
+            //Trajet trajet = listeTrajets.get(0);
+            //tv.setText(trajet.getTitre());
+
+            for (int i = 0; i<15; i++){
+                listeTrajets.add(new Trajet("Course à pieds dans la forêt", 6350));
+                listeTrajets.add(new Trajet("Tour de vélo en famille", 3793));
+                listeTrajets.add(new Trajet("Rando en montagne", 10982));
+            }
+
+            List<HashMap<String, String>> listeTrajetsPourAfficher = new ArrayList<>();
+
+            for (Trajet trajet : listeTrajets){
+                listeTrajetsPourAfficher.add(trajet.obtenirTrajetPourAfficher());
+            }
+
+            SimpleAdapter adapter = new SimpleAdapter(
+                    getContext(),
+                    listeTrajetsPourAfficher,
+                    android.R.layout.two_line_list_item,
+                    new String[]{"titre", "duree"},
+                    new int[]{android.R.id.text1, android.R.id.text2}
+            );
+            listeViewTrajets.setAdapter(adapter);
+            //textAccueil.setVisibility(View.GONE);
 
             greyLayout.setVisibility(View.GONE);
             getActivity().getWindow().clearFlags(FLAG_NOT_TOUCHABLE);

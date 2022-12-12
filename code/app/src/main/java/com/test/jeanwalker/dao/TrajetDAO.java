@@ -30,6 +30,7 @@ public class TrajetDAO {
         // Init la liste des trajets
         List<Trajet> listeTrajets = new ArrayList<>();
 
+
         // Connexion à firebase et get tous les documents de la collection "trajet" pour currentUser
         firestore.collection("users")
                 .document(currentUser.getUid())
