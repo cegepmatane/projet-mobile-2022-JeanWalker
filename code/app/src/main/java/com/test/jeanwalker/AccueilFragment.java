@@ -49,6 +49,7 @@ public class AccueilFragment extends Fragment {
     private List<Trajet> listeTrajets;
     private FirebaseUser currentUser;
     private LinearLayout greyLayout;
+    private TextView textAccueil;
 
     public AccueilFragment() {
         // Required empty public constructor
@@ -89,7 +90,7 @@ public class AccueilFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        //TextView textAccueil = (TextView) view.findViewById(R.id.vueAccueilTextAccueil);
+        textAccueil = (TextView) view.findViewById(R.id.vueAccueilTextAccueil);
 
         listeViewTrajets = (ListView) view.findViewById(R.id.listeTrajets);
         greyLayout = (LinearLayout) view.findViewById(R.id.greyLayout);
@@ -141,6 +142,7 @@ public class AccueilFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         Log.d(TAG, "onStart: called");
 
@@ -176,7 +178,7 @@ public class AccueilFragment extends Fragment {
                     new int[]{android.R.id.text1, android.R.id.text2}
             );
             listeViewTrajets.setAdapter(adapter);
-            //textAccueil.setVisibility(View.GONE);
+            textAccueil.setVisibility(View.GONE);
 
             greyLayout.setVisibility(View.GONE);
             getActivity().getWindow().clearFlags(FLAG_NOT_TOUCHABLE);
