@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "423940378817",
+    "project_id": "jeanwalker",
+    "storage_bucket": "jeanwalker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423940378817:android:07296764ff397128b34440",
+        "android_client_info": {
+          "package_name": "com.test.jeanwalker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423940378817-56nh5v2sb3fqf24d80ecu38vota178i3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test.jeanwalker",
+            "certificate_hash": "aceed3f00ba3bfd8b62a41f92a6e3abd66157db3"
+          }
+        },
+        {
+          "client_id": "423940378817-co1jm76rl3bc0sjbb5td7gqdrv5hkief.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test.jeanwalker",
+            "certificate_hash": "1b335041a21db35ed7f22cf3956ce5b6a87a4102"
+          }
+        },
+        {
+          "client_id": "423940378817-fpe9150bopkm29eskthps43k54qcb12a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test.jeanwalker",
+            "certificate_hash": "1d7785f01cc98a065cce71e9859f2f508641d4b6"
+          }
+        },
+        {
+          "client_id": "423940378817-n9ifhg2k48guinmrgp4hvdqmp85r01rh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC14hS2_osbUzGpgW_yJt4h2At2EkizbUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423940378817-n9ifhg2k48guinmrgp4hvdqmp85r01rh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
