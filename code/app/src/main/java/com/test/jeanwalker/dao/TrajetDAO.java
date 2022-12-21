@@ -41,10 +41,12 @@ public class TrajetDAO {
                        //  Boucle pour passer, instancier et insérer tous les trajets dans listeTrajets
                        for (QueryDocumentSnapshot document : task.getResult()){
                            String titre = document.getId();
+                           String date = document.getString("date");
+                           int distance = document.getDouble("distance").intValue();
                            int duree = Math.toIntExact(Math.round(document.getDouble("duree")));
                            List<GeoPoint> route = (List<GeoPoint>) document.get("route");
 
-                           Trajet trajet = new Trajet(titre, duree, route);
+                           Trajet trajet = new Trajet(titre, duree, date, distance, route);
                            listeTrajets.add(trajet);
 
                            callback.onCallback(listeTrajets);

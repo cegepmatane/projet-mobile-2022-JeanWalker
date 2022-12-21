@@ -177,7 +177,13 @@ public class AccueilFragment extends Fragment {
                     new String[]{"titre", "duree"},
                     new int[]{android.R.id.text1, android.R.id.text2}
             );
+
             listeViewTrajets.setAdapter(adapter);
+            listeViewTrajets.setOnItemClickListener((parent, view, position, id) -> {
+                Intent intent = new Intent(getContext(), DetailActivity.class);
+                intent.putExtra("id", listeTrajetsPourAfficher.get(position).get("titre"));
+                startActivity(intent);
+            });
             textAccueil.setVisibility(View.GONE);
 
             greyLayout.setVisibility(View.GONE);

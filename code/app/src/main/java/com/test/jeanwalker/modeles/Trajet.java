@@ -10,6 +10,8 @@ import java.util.List;
 public class Trajet {
     protected String titre;
     protected int duree;
+    protected String date;
+    protected int distance;
     protected List<GeoPoint> route;
 
     public Trajet() {
@@ -39,6 +41,14 @@ public class Trajet {
         this.route = route;
     }
 
+    public Trajet(String titre, int duree, String date, int distance, List<GeoPoint> route) {
+        this.titre = titre;
+        this.duree = duree;
+        this.date = date;
+        this.distance = distance;
+        this.route = route;
+    }
+
     public List<GeoPoint> getRoute() {
         return route;
     }
@@ -61,6 +71,22 @@ public class Trajet {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     public HashMap<String, String> obtenirTrajetPourAfficher(){
