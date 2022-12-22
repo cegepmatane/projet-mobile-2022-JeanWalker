@@ -7,12 +7,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.test.jeanwalker.dao.FirestoreParametreCallbacks;
+import com.test.jeanwalker.dao.ParametreDAO;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +35,6 @@ public class ParametresFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     public ParametresFragment() {
         // Required empty public constructor
     }
@@ -45,6 +50,7 @@ public class ParametresFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static ParametresFragment newInstance(String param1, String param2) {
         ParametresFragment fragment = new ParametresFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,11 +71,43 @@ public class ParametresFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button signOutBtn = (Button) view.findViewById(R.id.vueParametresActionSignOut);
+        Button confirmesBtn = (Button) view.findViewById(R.id.actionParametresConfirmer);
+        Button annulerBtn = (Button) view.findViewById(R.id.actionParametresAnnuler);
+        EditText ageTxt = (EditText) view.findViewById(R.id.textParametresAge);
+        EditText tailleTxt = (EditText) view.findViewById(R.id.textParametresTaille);
+        EditText masseTxt = (EditText) view.findViewById(R.id.textParametresMasse);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        ParametreDAO parametreDAO = new ParametreDAO(auth.getCurrentUser(),(age,taille,masse)->{
+            ageTxt.setHint(String.valueOf(age));
+            tailleTxt.setHint(String.valueOf(taille));
+            masseTxt.setHint(String.valueOf(masse));
+        });
+        Log.i("TAMERE", "onViewCreated: " + parametreDAO.GetAge());
 
         signOutBtn.setOnClickListener(viewLambda -> {
-            FirebaseAuth auth = FirebaseAuth.getInstance();
             auth.signOut();
             startActivity(new Intent(getActivity(), LoginActivity.class));
+        });
+        confirmesBtn.setOnClickListener(viewLambda -> {
+            int age = ageTxt.getText().toString().isEmpty() ? 0 : Integer.parseInt(ageTxt.getText().toString());
+            float taille = tailleTxt.getText().toString().isEmpty() ? 0 : Float.parseFloat(tailleTxt.getText().toString());
+            float masse = masseTxt.getText().toString().isEmpty() ? 0 : Float.parseFloat(masseTxt.getText().toString());
+            parametreDAO.updateParametre(auth.getCurrentUser().getUid(), age, taille, masse);
+            ageTxt.setHint(ageTxt.getText().toString());
+            tailleTxt.setHint(tailleTxt.getText().toString());
+            masseTxt.setHint(masseTxt.getText().toString());
+
+        });
+        annulerBtn.setOnClickListener(viewLambda -> {
+            int age = 0;
+            float taille = 0;
+            float masse = 0;
+            Log.i("TAMERE", "onViewCreated: " + parametreDAO.GetAge());
+            parametreDAO.updateParametre(auth.getCurrentUser().getUid(), age, taille, masse);
+            ageTxt.setHint("");
+            tailleTxt.setHint("");
+            masseTxt.setHint("");
         });
     }
 
