@@ -1,6 +1,7 @@
 # Projet Android Cégep 2022 <!-- omit in toc -->
 
 Projet réalisé par Benjamin RODOT, Axel KLEIN, Lucas HEIDET pour le cours de programmation mobile de la session 5 du Cégep de Matane (2022).
+[Lien vidéo finale youtube](https://youtu.be/d0xeOkci3QQ)
 # Table des matières <!-- omit in toc -->
 - [1. Résumé du projet - Jean Walker](#1-résumé-du-projet---jean-walker)
 - [2. Technologies utilisées](#2-technologies-utilisées)
