@@ -9,10 +9,15 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,28 +27,45 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 
 public class MapsFragment extends Fragment {
 
-    public static final int BASE_LOCATION_UPDATE_INTERVAL = 1;
+    public static final int BASE_LOCATION_UPDATE_INTERVAL = 1000;
     public static final int PERMISSION_FINE_LOCATION = 100;
     public static final String TAG = "MAPS_FRAGMENT_TAG";
 
     Location lastLocation;
     private GoogleMap map;
+    private Marker userPosition;
     private boolean locationPermissionGranted;
 
+    private TextView textViewDistanceParcourue, textViewVitesseActuelle;
+    private Chronometer chronoDureeEnregistrement;
+
+    private EnregistrementManager enregistrementManager;
+
+    private boolean isRecording = false;
+
     FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
+
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -56,26 +78,6 @@ public class MapsFragment extends Fragment {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-//        @SuppressLint("MissingPermission")
-//        @Override
-//        public void onMapReady(GoogleMap googleMap) {
-//            map = googleMap;
-//            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-//
-//            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-//                getLastLocation();
-//            }else {
-//                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_FINE_LOCATION);
-//            }
-//            LatLng lastLocationLatLng;
-//            if (lastLocation != null){
-//                lastLocationLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-//            }else{
-//                lastLocationLatLng = new LatLng(47.66779474933158, 6.641531331825807);
-//            }
-//            googleMap.addMarker(new MarkerOptions().position(lastLocationLatLng).title("Dernière localisation"));
-//            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocationLatLng, 13));
-//        }
         @Override
         public void onMapReady(@NonNull GoogleMap googleMap) {
             map = googleMap;
@@ -83,6 +85,7 @@ public class MapsFragment extends Fragment {
             updateMapLocation();
 
             getLastLocation();
+
         }
     };
 
@@ -91,7 +94,18 @@ public class MapsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        createLocationRequest();
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                if (locationResult != null){
+                    //enregistrementManager.updateUi();
+                    Location location = locationResult.getLastLocation();
+                    updateUI(location);
+                }
+            }
+        };
     }
 
     @Nullable
@@ -99,7 +113,26 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        textViewDistanceParcourue = view.findViewById(R.id.textViewDistanceParcourue);
+        textViewVitesseActuelle = view.findViewById(R.id.textViewVitesseActuelle);
+        chronoDureeEnregistrement = view.findViewById(R.id.chronoDureeEnregistrement);
+
+        Button buttonDemarrerEnregistrement = (Button) view.findViewById(R.id.buttonDemarrerEnregistrement);
+        buttonDemarrerEnregistrement.setOnClickListener(view1 -> {
+            if (isRecording){
+                isRecording = false;
+                buttonDemarrerEnregistrement.setText("Démarrer");
+                enregistrementManager.arreterEnregistrement();
+            }else{
+                isRecording = true;
+                buttonDemarrerEnregistrement.setText("Arrêter");
+                chronoDureeEnregistrement.setBase(SystemClock.elapsedRealtime());
+                enregistrementManager.demarrerEnregistrement();
+            }
+        });
+        return view;
     }
 
     @Override
@@ -113,6 +146,12 @@ public class MapsFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startLocationUpdates();
     }
 
     @Override
@@ -143,12 +182,13 @@ public class MapsFragment extends Fragment {
                    if (task.isSuccessful()){
                        lastLocation = task.getResult();
                        if (lastLocation != null){
-                       map.addMarker(new MarkerOptions()
-                               .position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()))
-                               .flat(true)
-                               .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_arrow_orientation))
-                               .rotation(lastLocation.getBearing()));
-                       map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 14));
+                           userPosition = map.addMarker(new MarkerOptions()
+                                   .position(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()))
+                                   .flat(true)
+                                   .icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_arrow_orientation))
+                                   .rotation(lastLocation.getBearing()));
+                           map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude()), 19));
+                           enregistrementManager = new EnregistrementManager(map, userPosition, textViewDistanceParcourue, textViewVitesseActuelle, chronoDureeEnregistrement, fusedLocationProviderClient, requireActivity());
                        }
                    }else {
                        Log.d(TAG, "getLastLocation: Localisation actuelle nulle. Using Clairegoutte.");
@@ -199,5 +239,28 @@ public class MapsFragment extends Fragment {
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private void createLocationRequest(){
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(BASE_LOCATION_UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(100);
+        locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
+    }
+
+    private void updateUI(Location location){
+        userPosition.setPosition(new LatLng(location.getLatitude(), location.getLongitude()));
+        userPosition.setRotation(location.getBearing());
+        map.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder()
+                .target(userPosition.getPosition())
+                .bearing(userPosition.getRotation())
+                .zoom(19)
+                .build()));
+        //map.moveCamera(CameraUpdateFactory.newLatLng(userPosition.getPosition()));
+    }
+
+    @SuppressLint("MissingPermission")
+    private void startLocationUpdates(){
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 }

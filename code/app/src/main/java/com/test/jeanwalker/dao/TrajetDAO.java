@@ -2,6 +2,7 @@ package com.test.jeanwalker.dao;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -40,7 +41,7 @@ public class TrajetDAO {
                    if (task.isSuccessful()){
                        //  Boucle pour passer, instancier et insérer tous les trajets dans listeTrajets
                        for (QueryDocumentSnapshot document : task.getResult()){
-                           String titre = document.getId();
+                           String titre = document.getString("titre");
                            String date = document.getString("date");
                            int distance = document.getDouble("distance").intValue();
                            int duree = Math.toIntExact(Math.round(document.getDouble("duree")));
@@ -71,10 +72,22 @@ public class TrajetDAO {
         // Crée le HashMap à entrer dans Firebase à partir du trajet en paramètre
         Map<String, Object> trajetFirebase = new HashMap<>();
         trajetFirebase.put("titre", trajet.getTitre());
+        trajetFirebase.put("date", trajet.getDate());
         trajetFirebase.put("duree", trajet.getDuree());
+        trajetFirebase.put("distance", trajet.getDistance());
         trajetFirebase.put("route", trajet.getRoute());
 
-        //
+        //Fonction Firestore pour ajouter le trajet
+        firestore.collection("users")
+                .document(currentUser.getUid())
+                .collection("trajets")
+                .document()
+                .set(trajetFirebase)
+                .addOnSuccessListener(unused -> Log.d(TAG, "ajouterTrajet: Ajout trajet réussi")
+                )
+                .addOnFailureListener(e ->{
+                    Log.w(TAG, "ajouterTrajet: Erreur d'ajout de trajet. Execption : ", e);
+                });
     }
 
     public Trajet getTrajet() {

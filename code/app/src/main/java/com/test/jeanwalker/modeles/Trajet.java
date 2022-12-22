@@ -11,7 +11,7 @@ public class Trajet {
     protected String titre;
     protected int duree;
     protected String date;
-    protected int distance;
+    protected double distance;
     protected List<GeoPoint> route;
 
     public Trajet() {
@@ -41,7 +41,7 @@ public class Trajet {
         this.route = route;
     }
 
-    public Trajet(String titre, int duree, String date, int distance, List<GeoPoint> route) {
+    public Trajet(String titre, int duree, String date, double distance, List<GeoPoint> route) {
         this.titre = titre;
         this.duree = duree;
         this.date = date;
@@ -81,11 +81,11 @@ public class Trajet {
         this.date = date;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
@@ -108,6 +108,7 @@ public class Trajet {
         }
         return latLngRoute;
     }
+
 
     private String dureeEnString(int duree){
         int hr = duree / 3600;
